@@ -28,10 +28,10 @@ adding the BOARD variable, defaulting to nk3xn.
  create mode 100644 runners/lpc55/board/src/nk3xn/button.rs
  create mode 100644 runners/lpc55/board/src/nk3xn/led.rs
 
-diff --git a/solo2/Makefile b/solo2/Makefile
-index 4a32051..5d5aee0 100644
---- a/solo2/Makefile
-+++ b/solo2/Makefile
+Index: solo2-patches/solo2/Makefile
+===================================================================
+--- solo2-patches.orig/solo2/Makefile
++++ solo2-patches/solo2/Makefile
 @@ -1,13 +1,13 @@
  RUNNER := runners/lpc55
  
@@ -50,19 +50,19 @@ index 4a32051..5d5aee0 100644
  
  jlink:
  	scripts/bump-jlink
-diff --git a/solo2/runners/lpc55/.gitignore b/solo2/runners/lpc55/.gitignore
-index 054a837..80d0e58 100644
---- a/solo2/runners/lpc55/.gitignore
-+++ b/solo2/runners/lpc55/.gitignore
-@@ -2,3 +2,4 @@ target
- Cargo.lock
+Index: solo2-patches/solo2/runners/lpc55/.gitignore
+===================================================================
+--- solo2-patches.orig/solo2/runners/lpc55/.gitignore
++++ solo2-patches/solo2/runners/lpc55/.gitignore
+@@ -1,3 +1,4 @@
+ target
  *.elf
  lpc55s69.pack
 +*.bin
-diff --git a/solo2/runners/lpc55/Cargo.toml b/solo2/runners/lpc55/Cargo.toml
-index 158a832..4355d2b 100644
---- a/solo2/runners/lpc55/Cargo.toml
-+++ b/solo2/runners/lpc55/Cargo.toml
+Index: solo2-patches/solo2/runners/lpc55/Cargo.toml
+===================================================================
+--- solo2-patches.orig/solo2/runners/lpc55/Cargo.toml
++++ solo2-patches/solo2/runners/lpc55/Cargo.toml
 @@ -75,6 +75,8 @@ format-filesystem = []
  board-lpcxpresso55 = ["board/board-lpcxpresso55"]
  board-okdoe1 = ["board/board-okdoe1", "board-lpcxpresso55", "usbfs-peripheral"]
@@ -72,10 +72,10 @@ index 158a832..4355d2b 100644
  
  log-rtt = ["rtt-target"]
  log-semihosting = ["cortex-m-semihosting"]
-diff --git a/solo2/runners/lpc55/Makefile b/solo2/runners/lpc55/Makefile
-index 3f4866b..17b769d 100644
---- a/solo2/runners/lpc55/Makefile
-+++ b/solo2/runners/lpc55/Makefile
+Index: solo2-patches/solo2/runners/lpc55/Makefile
+===================================================================
+--- solo2-patches.orig/solo2/runners/lpc55/Makefile
++++ solo2-patches/solo2/runners/lpc55/Makefile
 @@ -1,11 +1,32 @@
 -FEATURES := board-lpcxpresso55,develop
 +BOARD ?= nk3xn
@@ -112,11 +112,11 @@ index 3f4866b..17b769d 100644
  bacon:
  	bacon
  
-diff --git a/solo2/runners/lpc55/board/Cargo.toml b/solo2/runners/lpc55/board/Cargo.toml
-index ee3e58e..26e5b13 100644
---- a/solo2/runners/lpc55/board/Cargo.toml
-+++ b/solo2/runners/lpc55/board/Cargo.toml
-@@ -15,6 +15,8 @@ trussed = { git = "https://github.com/trussed-dev/trussed", branch = "main" }
+Index: solo2-patches/solo2/runners/lpc55/board/Cargo.toml
+===================================================================
+--- solo2-patches.orig/solo2/runners/lpc55/board/Cargo.toml
++++ solo2-patches/solo2/runners/lpc55/board/Cargo.toml
+@@ -15,6 +15,8 @@ trussed = { git = "https://github.com/tr
  board-lpcxpresso55 = []
  board-okdoe1 = ["board-lpcxpresso55"]
  board-solo2 = []
@@ -125,11 +125,11 @@ index ee3e58e..26e5b13 100644
  
  no-buttons = []
  no-clock-controller = []
-diff --git a/solo2/runners/lpc55/board/README.md b/solo2/runners/lpc55/board/README.md
-index 907bda1..012003c 100644
---- a/solo2/runners/lpc55/board/README.md
-+++ b/solo2/runners/lpc55/board/README.md
-@@ -5,9 +5,11 @@ This implements `trussed::Platform` for some LPC55S69 boards.
+Index: solo2-patches/solo2/runners/lpc55/board/README.md
+===================================================================
+--- solo2-patches.orig/solo2/runners/lpc55/board/README.md
++++ solo2-patches/solo2/runners/lpc55/board/README.md
+@@ -5,9 +5,11 @@ This implements `trussed::Platform` for
  The main ones are:
  - [LPCXpresso55S69][lpcxpresso], the official development board by NXP
  - [Solo 2][solo2], the new security key by SoloKeys
@@ -150,10 +150,10 @@ index 907bda1..012003c 100644
 +[nk3an]: https://shop.nitrokey.com/shop/product/nk3an-nitrokey-3a-nfc-147
 +[nk3cn]: https://shop.nitrokey.com/shop/product/nk3cn-nitrokey-3c-nfc-148
 +[nk3am]: https://shop.nitrokey.com/shop/product/nk3am-nitrokey-3a-mini-149
-diff --git a/solo2/runners/lpc55/board/src/lib.rs b/solo2/runners/lpc55/board/src/lib.rs
-index 81225ef..1f8fca7 100644
---- a/solo2/runners/lpc55/board/src/lib.rs
-+++ b/solo2/runners/lpc55/board/src/lib.rs
+Index: solo2-patches/solo2/runners/lpc55/board/src/lib.rs
+===================================================================
+--- solo2-patches.orig/solo2/runners/lpc55/board/src/lib.rs
++++ solo2-patches/solo2/runners/lpc55/board/src/lib.rs
 @@ -5,7 +5,7 @@ pub use lpc55_hal as hal;
  pub mod traits;
  
@@ -175,19 +175,17 @@ index 81225ef..1f8fca7 100644
  pub use specifics::{
      button::ThreeButtons,
      led::RgbLed,
-diff --git a/solo2/runners/lpc55/board/src/nk3xn.rs b/solo2/runners/lpc55/board/src/nk3xn.rs
-new file mode 100644
-index 0000000..7ac84c2
+Index: solo2-patches/solo2/runners/lpc55/board/src/nk3xn.rs
+===================================================================
 --- /dev/null
-+++ b/solo2/runners/lpc55/board/src/nk3xn.rs
++++ solo2-patches/solo2/runners/lpc55/board/src/nk3xn.rs
 @@ -0,0 +1,2 @@
 +pub mod button;
 +pub mod led;
-diff --git a/solo2/runners/lpc55/board/src/nk3xn/button.rs b/solo2/runners/lpc55/board/src/nk3xn/button.rs
-new file mode 100644
-index 0000000..97247d0
+Index: solo2-patches/solo2/runners/lpc55/board/src/nk3xn/button.rs
+===================================================================
 --- /dev/null
-+++ b/solo2/runners/lpc55/board/src/nk3xn/button.rs
++++ solo2-patches/solo2/runners/lpc55/board/src/nk3xn/button.rs
 @@ -0,0 +1,195 @@
 +use core::convert::Infallible;
 +use crate::hal::traits::wg::digital::v2::InputPin;
@@ -384,11 +382,10 @@ index 0000000..97247d0
 +        }
 +    }
 +}
-diff --git a/solo2/runners/lpc55/board/src/nk3xn/led.rs b/solo2/runners/lpc55/board/src/nk3xn/led.rs
-new file mode 100644
-index 0000000..221daee
+Index: solo2-patches/solo2/runners/lpc55/board/src/nk3xn/led.rs
+===================================================================
 --- /dev/null
-+++ b/solo2/runners/lpc55/board/src/nk3xn/led.rs
++++ solo2-patches/solo2/runners/lpc55/board/src/nk3xn/led.rs
 @@ -0,0 +1,92 @@
 +use crate::hal::{
 +    self,
@@ -482,10 +479,10 @@ index 0000000..221daee
 +    }
 +}
 +
-diff --git a/solo2/runners/lpc55/src/lib.rs b/solo2/runners/lpc55/src/lib.rs
-index 45465dc..d67817e 100644
---- a/solo2/runners/lpc55/src/lib.rs
-+++ b/solo2/runners/lpc55/src/lib.rs
+Index: solo2-patches/solo2/runners/lpc55/src/lib.rs
+===================================================================
+--- solo2-patches.orig/solo2/runners/lpc55/src/lib.rs
++++ solo2-patches/solo2/runners/lpc55/src/lib.rs
 @@ -216,6 +216,13 @@ pub fn init_board(
          &mut iocon,
      );
@@ -514,6 +511,3 @@ index 45465dc..d67817e 100644
          // Boot to bootrom if buttons are all held for 5s
          info!("button start {}",perf_timer.elapsed().0/1000);
          delay_timer.start(5_000_000.microseconds());
--- 
-2.20.1
-
